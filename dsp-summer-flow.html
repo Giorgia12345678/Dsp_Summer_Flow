@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSP Summer Flow 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Antonio:wght@400;700&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #2b2461;
+    --navy-light: #3d3480;
+    --rose: #d6405c;
+    --rose-dark: #b8324c;
+    --lilla: #7b6fcf;
+    --lilla-light: #b3a9e8;
+    --cream: #faf8f4;
+    --white: #ffffff;
+    --gold: #e8c97a;
+    --soft-grey: #f0eee9;
+    --text-dark: #1a1635;
+    --wa-link: https://api.whatsapp.com/send/?phone=3398132329&text&type=phone_number&app_absent=0&utm_source=ig;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Nunito Sans',sans-serif; background:var(--cream); color:var(--text-dark); overflow-x:hidden; }
+
+  .slide {
+    min-height:100vh; width:100%;
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    position:relative; overflow:hidden; padding:60px 40px;
+  }
+
+  h1,h2,h3 { font-family:'Anton',sans-serif; letter-spacing:0.03em; text-transform:uppercase; line-height:1.0; }
+
+  .section-eyebrow {
+    color:var(--rose); font-size:11px; font-weight:700; letter-spacing:0.35em; text-transform:uppercase;
+    margin-bottom:20px; display:flex; align-items:center; gap:12px;
+  }
+  .section-eyebrow::before { content:''; width:30px; height:2px; background:var(--rose); }
+
+  /* ========================================
+     NAV DOTS
+  ======================================== */
+  .nav-dots {
+    position:fixed; right:28px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:10px; z-index:100;
+  }
+  .nav-dot {
+    width:8px; height:8px; border-radius:50%; background:rgba(43,36,97,0.25);
+    cursor:pointer; transition:background 0.3s,transform 0.3s; border:none; padding:0;
+  }
+  .nav-dot.active { background:var(--rose); transform:scale(1.4); }
+
+  /* ========================================
+     GLOWING PULSE BUTTON
+  ======================================== */
+  .btn-pulse {
+    display:inline-flex; align-items:center; gap:12px;
+    background:linear-gradient(135deg, #ff4f72 0%, #d6405c 50%, #c2364f 100%);
+    color:white; padding:20px 48px;
+    font-size:14px; font-weight:800; letter-spacing:0.2em; text-transform:uppercase;
+    text-decoration:none; position:relative; overflow:hidden;
+    box-shadow: 0 0 0 0 rgba(214,64,92,0.6);
+    animation: pulse-glow 2s infinite;
+    transition: transform 0.2s;
+  }
+  .btn-pulse::before {
+    content:'';
+    position:absolute; top:-50%; left:-60%; width:40%; height:200%;
+    background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    animation: glare 2.5s infinite;
+  }
+  .btn-pulse:hover { transform:translateY(-3px) scale(1.03); }
+
+  @keyframes pulse-glow {
+    0%   { box-shadow: 0 0 0 0 rgba(214,64,92,0.7); }
+    50%  { box-shadow: 0 0 24px 10px rgba(214,64,92,0.0); }
+    100% { box-shadow: 0 0 0 0 rgba(214,64,92,0.7); }
+  }
+  @keyframes glare {
+    0%   { left:-60%; }
+    60%  { left:120%; }
+    100% { left:120%; }
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ========================================
+     SLIDE 1 — HERO
+  ======================================== */
+  .slide-hero {
+    min-height:100vh; display:grid; grid-template-rows:1fr auto; padding:0;
+    background:linear-gradient(135deg, #130d33 0%, #2b2461 35%, #4d1e5e 65%, #7a244e 100%);
+  }
+  .hero-inner {
+    display:flex; flex-direction:column; justify-content:center; align-items:flex-start;
+    padding:80px 80px 40px; position:relative; z-index:2;
+  }
+  .hero-bg-text {
+    position:absolute; top:50%; right:-40px; transform:translateY(-50%);
+    font-family:'Anton',sans-serif; font-size:clamp(120px,20vw,280px);
+    color:rgba(255,255,255,0.03); letter-spacing:-0.05em; line-height:1;
+    user-select:none; pointer-events:none;
+  }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--rose); color:white; padding:8px 20px; margin-bottom:40px;
+    font-size:11px; font-weight:700; letter-spacing:0.3em; text-transform:uppercase;
+  }
+  .hero-badge::before {
+    content:''; width:6px; height:6px; background:white; border-radius:50%;
+    animation:blink 1.5s infinite;
+  }
+  .hero-title {
+    font-family:'Anton',sans-serif; font-size:clamp(56px,9vw,140px);
+    color:white; line-height:0.9; letter-spacing:-0.02em; margin-bottom:32px;
+  }
+  .hero-title span { color:var(--rose); display:block; }
+  .hero-claim {
+    font-family:'Nunito Sans',sans-serif; font-size:clamp(16px,2.2vw,26px);
+    color:rgba(255,255,255,0.75); font-weight:300; line-height:1.6;
+    max-width:560px; margin-bottom:50px;
+    border-left:3px solid var(--rose); padding-left:24px;
+  }
+  .hero-claim em { color:white; font-style:normal; font-weight:600; }
+  .hero-pills { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:60px; }
+  .hero-pill {
+    padding:10px 22px; border:1.5px solid rgba(255,255,255,0.2);
+    color:rgba(255,255,255,0.8); font-size:13px; font-weight:600;
+    letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .hero-pill.rose { background:var(--rose); border-color:var(--rose); color:white; }
+  .hero-pill.lilla { background:var(--lilla); border-color:var(--lilla); color:white; }
+  .hero-bottom {
+    padding:24px 80px; background:rgba(0,0,0,0.25);
+    border-top:1px solid rgba(255,255,255,0.08);
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  }
+  .hero-stat { text-align:center; }
+  .hero-stat-num { font-family:'Anton',sans-serif; font-size:30px; color:var(--rose); display:block; line-height:1; }
+  .hero-stat-num.wide { font-size:18px; letter-spacing:0.01em; }
+  .hero-stat-label { font-size:10px; color:rgba(255,255,255,0.5); letter-spacing:0.2em; text-transform:uppercase; margin-top:4px; }
+  .hero-divider { width:1px; height:40px; background:rgba(255,255,255,0.15); }
+
+  /* ========================================
+     SLIDE 2 — WHY
+  ======================================== */
+  .slide-why { background:var(--cream); align-items:flex-start; padding:100px 80px; }
+  .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; width:100%; max-width:1200px; margin-top:60px; }
+  .why-left h2 { font-size:clamp(42px,5vw,80px); color:var(--navy); margin-bottom:30px; }
+  .why-left h2 .accent { color:var(--rose); }
+  .why-statement { font-size:20px; font-weight:700; color:var(--navy); line-height:1.4; margin-bottom:24px; }
+  .why-right { display:flex; flex-direction:column; gap:0; }
+  .why-card { padding:28px 0; border-bottom:1px solid rgba(43,36,97,0.1); display:flex; gap:20px; align-items:flex-start; }
+  .why-card:first-child { padding-top:0; }
+  .why-icon { width:44px; height:44px; background:var(--navy); color:white; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .why-card h4 { font-family:'Nunito Sans',sans-serif; font-size:14px; font-weight:800; letter-spacing:0.15em; text-transform:uppercase; color:var(--navy); margin-bottom:6px; }
+  .why-card p { font-size:15px; color:#555; line-height:1.7; }
+  .why-highlight { margin-top:50px; background:var(--navy); padding:40px; color:white; position:relative; overflow:hidden; }
+  .why-highlight::before { content:'"'; font-family:'Anton',sans-serif; font-size:200px; position:absolute; top:-40px; left:20px; color:rgba(214,64,92,0.15); line-height:1; }
+  .why-highlight p { font-size:20px; font-style:italic; line-height:1.7; color:rgba(255,255,255,0.9); position:relative; z-index:1; }
+  .why-highlight p strong { color:var(--gold); font-style:normal; }
+
+  /* ========================================
+     SLIDE 3 — TARGET
+  ======================================== */
+  .slide-target { background:var(--navy); padding:100px 80px; align-items:flex-start; }
+  .target-header { width:100%; max-width:1200px; margin-bottom:60px; }
+  .target-header h2 { font-size:clamp(42px,5.5vw,88px); color:white; margin-bottom:20px; }
+  .target-header p { color:rgba(255,255,255,0.6); font-size:18px; max-width:500px; line-height:1.6; }
+  .target-grid { display:grid; grid-template-columns:1fr 1fr; gap:30px; width:100%; max-width:1200px; }
+  .target-box { position:relative; overflow:hidden; border:1.5px solid rgba(255,255,255,0.08); padding:48px; transition:transform 0.3s; }
+  .target-box:hover { transform:translateY(-4px); }
+  .target-box-a { background:linear-gradient(135deg, rgba(123,111,207,0.3) 0%, rgba(43,36,97,0.75) 100%); border-color:rgba(179,169,232,0.45); }
+  .target-box-b { background:linear-gradient(135deg, rgba(214,64,92,0.28) 0%, rgba(43,36,97,0.75) 100%); border-color:rgba(214,64,92,0.5); }
+  .target-percorso-label {
+    display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.25em; text-transform:uppercase;
+    padding:5px 14px; border:1.5px solid; margin-bottom:20px;
+  }
+  .target-box-a .target-percorso-label { color:var(--lilla-light); border-color:var(--lilla-light); }
+  .target-box-b .target-percorso-label { color:var(--rose); border-color:var(--rose); }
+  .target-age-badge { display:inline-block; font-family:'Anton',sans-serif; font-size:56px; color:white; line-height:1; margin-bottom:8px; }
+  .target-age-unit { font-size:14px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:32px; }
+  .target-box-a .target-accent { color:var(--lilla-light); }
+  .target-box-b .target-accent { color:var(--rose); }
+  .target-schedule { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:36px; }
+  .schedule-slot { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); padding:14px 16px; }
+  .schedule-slot .day { font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:4px; }
+  .schedule-slot .time { font-size:16px; font-weight:700; color:white; }
+  .courses-label { font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px; }
+  .courses-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .courses-list li { display:flex; align-items:center; gap:12px; font-size:15px; color:rgba(255,255,255,0.85); font-weight:600; }
+  /* Inline row variant — all courses on one line per item */
+  .courses-list.inline { flex-direction:row; flex-wrap:nowrap; gap:0; align-items:center; }
+  .courses-list.inline li {
+    font-size:13px; gap:6px; white-space:nowrap;
+    padding:0 14px 0 0;
+  }
+  .courses-list.inline li:not(:last-child)::after {
+    content:'·'; color:rgba(255,255,255,0.25); margin-left:14px; font-weight:300;
+  }
+  .courses-list.inline .course-tag {
+    font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+    padding:2px 8px; border-radius:3px; margin-left:4px;
+  }
+  .target-box-a .courses-list.inline .course-tag.stile   { background:rgba(179,169,232,0.2); color:var(--lilla-light); }
+  .target-box-a .courses-list.inline .course-tag.tecnica { background:rgba(232,201,122,0.15); color:var(--gold); }
+  .target-box-b .courses-list.inline .course-tag.stile   { background:rgba(214,64,92,0.2); color:#ff9aac; }
+  .target-box-b .courses-list.inline .course-tag.tecnica { background:rgba(232,201,122,0.15); color:var(--gold); }
+  .courses-list li .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .target-box-a .dot { background:var(--lilla-light); }
+  .target-box-b .dot { background:var(--rose); }
+  .course-count { margin-left:auto; font-size:11px; color:rgba(255,255,255,0.4); letter-spacing:0.1em; }
+  .external-badge { margin-top:24px; background:rgba(232,201,122,0.1); border:1px solid rgba(232,201,122,0.3); padding:14px 18px; }
+  .external-badge span { font-size:13px; color:var(--gold); line-height:1.5; font-weight:600; }
+
+  /* CTA inside target box */
+  .target-cta {
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:28px; padding:14px 28px;
+    background:linear-gradient(135deg, #ff4f72 0%, #d6405c 50%, #c2364f 100%);
+    color:white; font-size:13px; font-weight:800; letter-spacing:0.18em; text-transform:uppercase;
+    text-decoration:none; position:relative; overflow:hidden;
+    box-shadow:0 0 0 0 rgba(214,64,92,0.6);
+    animation:pulse-glow 2s infinite;
+    transition:transform 0.2s;
+    width:100%;
+    justify-content:center;
+  }
+  .target-cta::before {
+    content:''; position:absolute; top:-50%; left:-60%; width:40%; height:200%;
+    background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    animation:glare 2.5s infinite;
+  }
+  .target-cta:hover { transform:translateY(-2px) scale(1.02); }
+
+  /* ========================================
+     SLIDE 4 — GANTT
+  ======================================== */
+  .slide-gantt { background:var(--soft-grey); padding:100px 80px; align-items:flex-start; }
+  .gantt-header { width:100%; max-width:1200px; margin-bottom:60px; }
+  .gantt-header h2 { font-size:clamp(38px,4.5vw,72px); color:var(--navy); }
+  .gantt-scroll-hint {
+    display:none; align-items:center; gap:8px; margin-top:16px;
+    font-size:12px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--rose);
+  }
+  .gantt-scroll-hint svg { animation:nudge 1.5s infinite; }
+  @keyframes nudge { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
+  .gantt-wrap { width:100%; max-width:1200px; overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative; }
+  .gantt-table { width:100%; min-width:680px; border-collapse:separate; border-spacing:0; }
+  .gantt-table th {
+    font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+    color:#999; padding:14px 22px; text-align:left; border-bottom:2px solid #e0ddd6; white-space:nowrap;
+  }
+  .gantt-table td { padding:0; vertical-align:middle; }
+  .gantt-row + .gantt-row .gantt-cell-meta { border-top:1px solid #e8e5de; }
+
+  /* Group headers — refined gradient pills instead of flat blocks */
+  .gantt-group-header td {
+    padding:0;
+  }
+  .gantt-group-inner {
+    display:flex; align-items:center; gap:14px;
+    padding:18px 24px;
+    font-family:'Anton',sans-serif; font-size:17px; letter-spacing:0.1em; color:white;
+    position:relative; overflow:hidden;
+  }
+  .gantt-group-inner::after {
+    content:''; position:absolute; top:0; right:0; bottom:0; width:60%;
+    background:linear-gradient(to right, transparent, rgba(255,255,255,0.06));
+    pointer-events:none;
+  }
+  .group-a .gantt-group-inner {
+    background:linear-gradient(135deg, #5a4fb8 0%, #7b6fcf 60%, #9e93e0 100%);
+  }
+  .group-b .gantt-group-inner {
+    background:linear-gradient(135deg, #9e1f38 0%, #d6405c 60%, #e8637a 100%);
+  }
+  .gantt-group-chip {
+    display:inline-flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25);
+    border-radius:20px; padding:3px 12px;
+    font-family:'Nunito Sans',sans-serif; font-size:11px; font-weight:700;
+    letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.9);
+    white-space:nowrap;
+  }
+  .gantt-group-time {
+    font-family:'Nunito Sans',sans-serif; font-size:12px; font-weight:600;
+    letter-spacing:0.12em; opacity:0.65; text-transform:uppercase;
+    margin-left:auto;
+  }
+
+  .gantt-cell-meta { padding:22px 22px; min-width:220px; }
+  .course-name { font-weight:800; font-size:15px; color:var(--navy); margin-bottom:0; }
+  .gantt-cell-bar { padding:22px 14px; min-width:200px; }
+  .gantt-weeks { display:flex; gap:8px; }
+  .gantt-week-block {
+    flex:1; height:38px; display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:700; letter-spacing:0.1em; color:white; text-transform:uppercase;
+    border-radius:4px;
+  }
+  .week-active-lilla { background:linear-gradient(135deg,#7b6fcf,#9e93e0); }
+  .week-active-rose  { background:linear-gradient(135deg,#d6405c,#e8637a); }
+  .week-inactive     { background:#e0ddd6; color:#bbb; border-radius:4px; }
+  .gantt-cell-type { padding:22px 18px; min-width:110px; }
+  .type-badge { display:inline-block; padding:5px 12px; font-size:11px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; border:1.5px solid; border-radius:3px; }
+  .type-badge.tecnica { border-color:var(--rose); color:var(--rose); }
+  .type-badge.fitness { border-color:var(--navy); color:var(--navy); }
+  .type-badge.stile   { border-color:#888; color:#888; }
+  .gantt-cell-day { padding:22px 18px; min-width:140px; font-size:13px; font-weight:600; color:#666; white-space:nowrap; }
+
+  /* ========================================
+     SLIDE 5 — CALENDARIO
+  ======================================== */
+  .slide-calendar {
+    /* gradient that bleeds seamlessly into mood */
+    background:linear-gradient(180deg, #2b2461 0%, #4a1d60 38%, #7b2555 65%, #4a1d60 82%, #1a0d30 100%);
+    padding:100px 80px; align-items:flex-start;
+  }
+  .calendar-header { width:100%; max-width:1200px; margin-bottom:60px; }
+  .calendar-header h2 { font-size:clamp(42px,5.5vw,88px); color:white; margin-bottom:24px; }
+  .calendar-cta-text { font-size:20px; color:rgba(255,255,255,0.7); font-weight:300; max-width:600px; line-height:1.6; }
+  .calendar-cta-text strong { color:var(--gold); font-weight:700; }
+  .weeks-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; width:100%; max-width:1200px; }
+  .week-card {
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+    padding:44px; position:relative; overflow:hidden;
+    transition:border-color 0.25s, background 0.25s, box-shadow 0.25s; cursor:default;
+  }
+  .week-card:hover { background:rgba(214,64,92,0.28); border-color:var(--rose); box-shadow:0 0 0 2px var(--rose),0 12px 40px rgba(214,64,92,0.3); }
+  .week-number { font-family:'Anton',sans-serif; font-size:100px; color:rgba(255,255,255,0.05); position:absolute; bottom:-20px; right:10px; line-height:1; pointer-events:none; }
+  .week-label { font-size:11px; font-weight:700; letter-spacing:0.3em; text-transform:uppercase; color:var(--rose); margin-bottom:14px; }
+  .week-dates { font-family:'Anton',sans-serif; font-size:32px; color:white; line-height:1.1; margin-bottom:20px; }
+  .week-dates span { display:block; font-family:'Nunito Sans',sans-serif; font-size:16px; color:rgba(255,255,255,0.5); font-weight:400; margin-top:4px; }
+  .week-days-row { display:flex; gap:6px; margin-top:24px; }
+  .week-day-dot { width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:rgba(255,255,255,0.3); border:1px solid rgba(255,255,255,0.08); }
+  .week-day-dot.active { background:var(--rose); color:white; border-color:var(--rose); }
+  .calendar-flexibility {
+    width:100%; max-width:1200px; margin-top:40px;
+    background:var(--rose); padding:30px 48px; display:flex; align-items:center; gap:24px;
+  }
+  .calendar-flexibility .icon { font-size:32px; }
+  .calendar-flexibility p { font-size:17px; color:white; font-weight:700; line-height:1.5; }
+  .calendar-flexibility p span { font-weight:300; opacity:0.88; }
+
+  /* ========================================
+     SLIDE MOOD
+     Background starts exactly where calendar ends (#1a0d30) — seamless
+  ======================================== */
+  .slide-mood {
+    min-height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden;
+    background:linear-gradient(180deg, #1a0d30 0%, #0d0920 100%);
+    position:relative;
+  }
+  .mood-overlay {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse at 30% 60%, rgba(214,64,92,0.22) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 30%, rgba(123,111,207,0.18) 0%, transparent 50%);
+    z-index:1;
+  }
+  .mood-content { position:relative; z-index:2; text-align:center; padding:60px 40px; }
+  .mood-eyebrow {
+    font-size:12px; font-weight:700; letter-spacing:0.4em; text-transform:uppercase;
+    color:var(--rose); margin-bottom:30px; display:flex; align-items:center; justify-content:center; gap:16px;
+  }
+  .mood-eyebrow::before,.mood-eyebrow::after { content:''; width:40px; height:1px; background:var(--rose); }
+  /* Tighter letter-spacing and line-height as requested */
+  .mood-title {
+    font-family:'Anton',sans-serif;
+    font-size:clamp(60px,10vw,150px);
+    color:white;
+    line-height:0.95;
+    letter-spacing:0.06em;
+    margin-bottom:30px;
+  }
+  .mood-title .line2 { color:var(--rose); display:block; }
+  .mood-title .line3 { color:rgba(255,255,255,0.3); display:block; font-size:0.6em; }
+  .mood-sub { font-size:18px; color:rgba(255,255,255,0.5); font-weight:300; letter-spacing:0.2em; text-transform:uppercase; }
+
+  /* ========================================
+     SLIDE PRICING
+  ======================================== */
+  .slide-pricing {
+    /* Same gradient palette as "Quando" slide */
+    background:linear-gradient(180deg, #2b2461 0%, #4a1d60 38%, #7b2555 65%, #2b2461 100%);
+    padding:100px 80px; align-items:flex-start;
+  }
+  .pricing-header { width:100%; max-width:1200px; margin-bottom:60px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; }
+  .pricing-header h2 { font-size:clamp(42px,5vw,80px); color:white; }
+  .pricing-sub { font-size:16px; color:rgba(255,255,255,0.55); font-weight:300; max-width:350px; text-align:right; line-height:1.6; }
+
+  .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; width:100%; max-width:1200px; margin-bottom:50px; }
+  .price-card {
+    background:rgba(255,255,255,0.07); border:1.5px solid rgba(255,255,255,0.1);
+    padding:48px 40px; position:relative; overflow:hidden;
+    transition:transform 0.3s,box-shadow 0.3s,background 0.3s;
+    backdrop-filter:blur(8px);
+  }
+  .price-card:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.3); background:rgba(255,255,255,0.12); }
+  .price-card.featured {
+    background:rgba(255,255,255,0.14); border-color:rgba(214,64,92,0.6); transform:scale(1.03);
+    box-shadow:0 0 0 2px rgba(214,64,92,0.4);
+  }
+  .price-card.featured:hover { transform:scale(1.03) translateY(-6px); box-shadow:0 24px 60px rgba(214,64,92,0.3); }
+  .price-card.featured::before { content:'BEST VALUE'; position:absolute; top:0; right:0; background:var(--rose); color:white; font-size:10px; font-weight:800; letter-spacing:0.2em; padding:7px 16px; }
+  .price-weeks { font-family:'Anton',sans-serif; font-size:60px; color:white; line-height:1; margin-bottom:4px; }
+  .price-weeks-label { font-size:13px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:32px; }
+  .price-per-week { display:block; font-size:13px; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:8px; }
+  .price-amount { font-family:'Anton',sans-serif; font-size:48px; color:var(--rose); line-height:1; margin-bottom:6px; }
+  .price-card.featured .price-amount { color:#ff7090; }
+  .price-per { font-size:14px; color:rgba(255,255,255,0.4); margin-bottom:28px; }
+  .price-divider { height:1px; background:rgba(255,255,255,0.1); margin-bottom:28px; }
+  .price-total-label { font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:6px; }
+  .price-total { font-family:'Anton',sans-serif; font-size:36px; color:white; }
+  .price-saving { margin-top:8px; font-size:13px; font-weight:700; color:var(--gold); }
+
+  .pricing-note {
+    width:100%; max-width:1200px;
+    background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08);
+    padding:30px 40px; display:flex; align-items:flex-start; gap:20px;
+  }
+  .pricing-note-icon { font-size:28px; flex-shrink:0; }
+  .pricing-note p { color:rgba(255,255,255,0.8); font-size:16px; line-height:1.5; }
+  .pricing-note strong { color:var(--gold); }
+
+  /* CTA after pricing */
+  .pricing-cta-wrap {
+    width:100%; max-width:1200px;
+    margin-top:40px; display:flex; justify-content:center;
+  }
+
+  /* ========================================
+     SLIDE COMMUNITY
+  ======================================== */
+  .slide-community { background:var(--navy); padding:100px 80px; align-items:flex-start; }
+  .community-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; width:100%; max-width:1200px; }
+  .community-left h2 { font-size:clamp(42px,5vw,80px); color:white; margin-bottom:40px; }
+  .community-left h2 .accent { color:var(--rose); }
+  .community-text { font-size:18px; color:rgba(255,255,255,0.7); line-height:1.8; margin-bottom:40px; font-weight:300; }
+  .community-text strong { color:white; font-weight:700; }
+  .community-values { display:flex; flex-direction:column; gap:20px; }
+  .community-value { display:flex; align-items:center; gap:16px; font-size:16px; font-weight:700; color:rgba(255,255,255,0.8); letter-spacing:0.05em; }
+  .community-value .val-icon { width:40px; height:40px; background:rgba(214,64,92,0.2); border:1px solid rgba(214,64,92,0.3); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .community-right { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:14px; }
+  .comm-photo { border:1px solid rgba(255,255,255,0.08); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; transition:border-color 0.25s,box-shadow 0.25s; cursor:default; }
+  .comm-photo:first-child { grid-row:span 2; }
+  .comm-photo:hover { border-color:var(--rose); box-shadow:0 0 0 2px var(--rose),inset 0 0 60px rgba(214,64,92,0.15); }
+  .comm-photo-inner { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px; transition:background 0.25s; }
+  .comm-photo:hover .comm-photo-inner { background:rgba(214,64,92,0.12); }
+  .comm-photo-icon { font-size:48px; opacity:0.35; transition:opacity 0.25s,transform 0.25s; }
+  .comm-photo:hover .comm-photo-icon { opacity:1; transform:scale(1.15); }
+  .comm-photo-label { font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(255,255,255,0.35); font-weight:700; transition:color 0.25s; }
+  .comm-photo:hover .comm-photo-label { color:rgba(255,255,255,0.85); }
+  .comm-photo-gradient-a { background:linear-gradient(135deg,rgba(214,64,92,0.2) 0%,rgba(43,36,97,0.5) 100%); min-height:300px; }
+  .comm-photo-gradient-b { background:linear-gradient(135deg,rgba(43,36,97,0.55) 0%,rgba(123,111,207,0.2) 100%); min-height:140px; }
+  .comm-photo-gradient-c { background:linear-gradient(135deg,rgba(123,111,207,0.25) 0%,rgba(43,36,97,0.55) 100%); min-height:140px; }
+
+  /* ========================================
+     SLIDE RECAP
+  ======================================== */
+  .slide-recap { background:var(--soft-grey); padding:100px 80px; align-items:flex-start; }
+  .recap-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; width:100%; max-width:1200px; }
+  .recap-section-title { font-size:clamp(36px,4vw,60px); color:var(--navy); margin-bottom:50px; grid-column:span 2; }
+  .recap-box { background:white; border:1.5px solid rgba(43,36,97,0.06); padding:40px; }
+  .recap-box-title { font-size:11px; font-weight:700; letter-spacing:0.25em; text-transform:uppercase; color:var(--rose); margin-bottom:24px; display:flex; align-items:center; gap:10px; }
+  .recap-box-title::after { content:''; flex:1; height:1px; background:rgba(43,36,97,0.08); }
+  .recap-item { display:flex; align-items:flex-start; gap:16px; padding:14px 0; border-bottom:1px solid rgba(43,36,97,0.06); }
+  .recap-item:last-child { border-bottom:none; }
+  .recap-item-icon { width:36px; height:36px; background:var(--navy); color:white; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .recap-item-text { flex:1; }
+  .recap-item-text strong { display:block; font-size:14px; font-weight:800; color:var(--navy); margin-bottom:2px; }
+  .recap-item-text span { font-size:14px; color:#777; font-weight:400; line-height:1.5; }
+  /* Red text for "numero chiuso" in iscrizione box */
+  .recap-item-text span.urgency { color:var(--rose); font-weight:700; }
+  .included-list { list-style:none; display:flex; flex-direction:column; gap:14px; }
+  .included-list li { display:flex; align-items:center; gap:14px; font-size:15px; color:var(--navy); font-weight:600; }
+  .check-icon { width:24px; height:24px; background:var(--rose); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+
+  /* ========================================
+     SLIDE CTA
+  ======================================== */
+  .slide-cta {
+    background:linear-gradient(180deg, #2b2461 0%, #4a1d60 38%, #7b2555 65%, #2b2461 100%);
+    padding:100px 80px; align-items:center; text-align:center;
+  }
+  .cta-eyebrow { font-size:11px; font-weight:700; letter-spacing:0.35em; text-transform:uppercase; color:var(--rose); margin-bottom:30px; display:flex; align-items:center; gap:16px; }
+  .cta-eyebrow::before,.cta-eyebrow::after { content:''; width:40px; height:1.5px; background:var(--rose); }
+  .cta-title { font-family:'Anton',sans-serif; font-size:clamp(52px,8vw,120px); color:white; margin-bottom:20px; letter-spacing:-0.02em; }
+  .cta-title .accent { color:var(--rose); display:block; }
+  .cta-urgency { font-size:15px; color:rgba(255,255,255,0.6); font-weight:400; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:60px; display:flex; align-items:center; justify-content:center; gap:10px; }
+  .cta-urgency::before { content:''; width:8px; height:8px; background:var(--rose); border-radius:50%; animation:blink 1.5s infinite; }
+  .cta-buttons { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+  .btn-secondary {
+    display:inline-flex; align-items:center; gap:12px;
+    background:transparent; color:white; padding:20px 48px;
+    font-size:14px; font-weight:800; letter-spacing:0.2em; text-transform:uppercase; text-decoration:none;
+    border:2px solid rgba(255,255,255,0.2); transition:border-color 0.2s,transform 0.2s;
+  }
+  .btn-secondary:hover { border-color:white; transform:translateY(-2px); }
+
+  /* ========================================
+     RESPONSIVE
+  ======================================== */
+  @media (max-width:900px) {
+    .why-grid,.target-grid,.weeks-grid,.community-grid,.recap-grid { grid-template-columns:1fr; }
+    .slide { padding:60px 20px; }
+    .slide-why,.slide-target,.slide-gantt,.slide-calendar,.slide-pricing,.slide-community,.slide-recap,.slide-cta { padding:60px 20px; }
+    .hero-inner { padding:60px 20px 40px; }
+    .hero-bottom { padding:24px 20px; }
+    .nav-dots { display:none; }
+    .gantt-scroll-hint { display:flex; }
+    .calendar-flexibility { padding:24px 20px; }
+    .recap-section-title { grid-column:span 1; }
+
+    /* Pricing cards: compressed for mobile */
+    .pricing-grid { grid-template-columns:1fr; gap:14px; }
+    .price-card { padding:28px 24px; }
+    .price-card.featured { transform:none; }
+    .price-card.featured:hover { transform:translateY(-4px); }
+    .price-weeks { font-size:44px; }
+    .price-amount { font-size:36px; }
+    .price-total { font-size:28px; }
+
+    .pricing-header { flex-direction:column; align-items:flex-start; }
+    .pricing-sub { text-align:left; }
+
+    /* community mobile scroll */
+    .community-right {
+      display:flex; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      gap:14px; padding-bottom:12px;
+      grid-template-columns:unset; grid-template-rows:unset;
+    }
+    .comm-photo { min-width:200px; min-height:200px; flex-shrink:0; }
+    .comm-photo:first-child { grid-row:unset; }
+    .comm-photo .comm-photo-icon { opacity:0.75; }
+    .comm-photo .comm-photo-label { color:rgba(255,255,255,0.7); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots" aria-label="Navigazione slide">
+  <button class="nav-dot active" data-target="slide-hero"      title="Cover"></button>
+  <button class="nav-dot"        data-target="slide-why"       title="Perché"></button>
+  <button class="nav-dot"        data-target="slide-target"    title="Per chi"></button>
+  <button class="nav-dot"        data-target="slide-gantt"     title="Programma"></button>
+  <button class="nav-dot"        data-target="slide-calendar"  title="Calendario"></button>
+  <button class="nav-dot"        data-target="slide-mood"      title="Mood"></button>
+  <button class="nav-dot"        data-target="slide-pricing"   title="Quote"></button>
+  <button class="nav-dot"        data-target="slide-community" title="Community"></button>
+  <button class="nav-dot"        data-target="slide-recap"     title="Riepilogo"></button>
+  <button class="nav-dot"        data-target="slide-cta"       title="CTA"></button>
+</nav>
+
+<!-- ==================== SLIDE 1 — HERO ==================== -->
+<section class="slide slide-hero" id="slide-hero">
+  <div class="hero-inner">
+    <div class="hero-bg-text" aria-hidden="true">FLOW</div>
+    <div class="hero-badge">Studio Pro Lainate &nbsp;·&nbsp; Posti Limitati · N° Chiuso</div>
+    <h1 class="hero-title">DSP<br><span>Summer</span>Flow</h1>
+    <p class="hero-claim">
+      Uno spazio estivo per restare nel flow.<br>
+      <em>Danzare. Scoprire. Crescere.</em>
+    </p>
+    <div class="hero-pills">
+      <div class="hero-pill lilla">12–14 anni</div>
+      <div class="hero-pill rose">15–18 anni</div>
+      <div class="hero-pill">Studio Pro Lainate</div>
+      <div class="hero-pill">da 1 a 3 settimane</div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-stat"><span class="hero-stat-num">3</span><div class="hero-stat-label">Settimane</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat"><span class="hero-stat-num">4</span><div class="hero-stat-label">Lezioni/Sett.</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat"><span class="hero-stat-num">2</span><div class="hero-stat-label">Incontri/Sett.</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat"><span class="hero-stat-num wide">22 GIU – 10 LUG</span><div class="hero-stat-label">Estate 2026</div></div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat"><span class="hero-stat-num wide">⚡ N° CHIUSO</span><div class="hero-stat-label">Posti limitati</div></div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 2 — WHY ==================== -->
+<section class="slide slide-why" id="slide-why">
+  <div style="width:100%;max-width:1200px;">
+    <div class="section-eyebrow">Perché DSP Summer Flow</div>
+    <div class="why-grid">
+      <div class="why-left">
+        <h2>Non<br>fermarti.<br><span class="accent">Resta nel flow.</span></h2>
+        <p class="why-statement">DSP Summer Flow è lo spazio pensato per chi non vuole perdere il ritmo — nemmeno d'estate.</p>
+        <div class="why-highlight">
+          <p>Perché a volte è proprio <strong>fuori dall'anno accademico</strong> che succede qualcosa di magico.<br>Nuovi stili. <strong>Insegnanti ospiti selezionati dall'esterno</strong>. Nuove connessioni.</p>
+        </div>
+      </div>
+      <div class="why-right">
+        <div class="why-card">
+          <div class="why-icon">🔥</div>
+          <div><h4>Un ritmo sostenibile</h4><p>Due incontri a settimana, quattro lezioni. Abbastanza per progredire, abbastanza per respirare l'estate.</p></div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🎯</div>
+          <div><h4>Flessibilità reale</h4><p>Scegli 1, 2 o 3 settimane in base a ciò che senti. Il percorso si adatta a te, non il contrario.</p></div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">✨</div>
+          <div><h4>Docenti Esterni — Opportunità Unica</h4><p>Ogni settimana porta insegnanti ospiti dall'esterno: professionisti che non incontreresti durante l'anno. Un'occasione rara per scoprire Studio Pro Lainate da un'angolazione completamente diversa.</p></div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🤝</div>
+          <div><h4>Connessioni che restano</h4><p>Non è solo danza: è uno spazio dove nascono amicizie, complicità e nuovi punti di riferimento.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3 — TARGET ==================== -->
+<section class="slide slide-target" id="slide-target">
+  <div class="target-header">
+    <div class="section-eyebrow" style="color:rgba(214,64,92,0.85)">A chi è dedicato</div>
+    <h2>Scegli<br><span style="color:var(--rose)">il tuo</span><br>percorso.</h2>
+    <p>Due incontri a settimana, 4 lezioni. I percorsi sono distinti per fascia d'età.<br>
+    <strong style="color:rgba(255,255,255,0.85)">Posti limitati:</strong> assicura il tuo prima che si esauriscano.</p>
+  </div>
+  <div class="target-grid">
+
+    <!-- BOX A: 12/14 — LILLA -->
+    <div class="target-box target-box-a">
+      <div class="target-percorso-label">Percorso A</div>
+      <div class="target-age-badge">12<span style="font-size:0.5em;color:var(--lilla-light);">/</span>14</div>
+      <div class="target-age-unit"><span class="target-accent">anni</span></div>
+      <div class="target-schedule">
+        <div class="schedule-slot"><div class="day">Lunedì</div><div class="time">19:00 – 21:00</div></div>
+        <div class="schedule-slot"><div class="day">Mercoledì</div><div class="time">19:00 – 21:00</div></div>
+      </div>
+      <div class="courses-label">Lezioni incluse</div>
+      <ul class="courses-list inline">
+        <li><span class="dot"></span> Commercial <span class="course-tag stile">Stile</span></li>
+        <li><span class="dot"></span> TV Show <span class="course-tag stile">Stile</span></li>
+        <li><span class="dot"></span> Fit Class <span class="course-tag tecnica">Tecnica</span></li>
+      </ul>
+      <div class="external-badge">
+        <span>🌟 <strong>Docenti ospiti dall'esterno</strong> — un'occasione unica per scoprire Studio Pro Lainate.</span>
+      </div>
+      <a href="https://api.whatsapp.com/send/?phone=3398132329&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" class="target-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Prenota ora il tuo posto
+      </a>
+    </div>
+
+    <!-- BOX B: 15/18 — ROSE -->
+    <div class="target-box target-box-b">
+      <div class="target-percorso-label">Percorso B</div>
+      <div class="target-age-badge">15<span style="font-size:0.5em;color:var(--rose);">/</span>18</div>
+      <div class="target-age-unit"><span class="target-accent">anni</span></div>
+      <div class="target-schedule">
+        <div class="schedule-slot"><div class="day">Lunedì</div><div class="time">19:00 – 21:00</div></div>
+        <div class="schedule-slot"><div class="day">Mercoledì</div><div class="time">19:00 – 21:00</div></div>
+      </div>
+      <div class="courses-label">Lezioni incluse</div>
+      <ul class="courses-list inline">
+        <li><span class="dot"></span> Heels <span class="course-tag stile">Stile</span></li>
+        <li><span class="dot"></span> TV Show <span class="course-tag stile">Stile</span></li>
+        <li><span class="dot"></span> Fit Class <span class="course-tag tecnica">Tecnica</span></li>
+      </ul>
+      <div class="external-badge">
+        <span>🌟 <strong>Docenti ospiti dall'esterno</strong> — un'occasione unica per scoprire Studio Pro Lainate.</span>
+      </div>
+      <a href="https://api.whatsapp.com/send/?phone=3398132329&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" class="target-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Prenota ora il tuo posto
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4 — GANTT ==================== -->
+<section class="slide slide-gantt" id="slide-gantt">
+  <div class="gantt-header">
+    <div>
+      <div class="section-eyebrow">Il Programma</div>
+      <h2>Il nostro<br><span style="color:var(--rose)">calendario</span><br>corsi.</h2>
+    </div>
+    <div class="gantt-scroll-hint">
+      Scorri per vedere tutto
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </div>
+
+  <div class="gantt-wrap">
+    <table class="gantt-table">
+      <thead>
+        <tr>
+          <th>Corso</th>
+          <th>Sett. 1 — 22–26 Giu</th>
+          <th>Sett. 2 — 29 Giu–3 Lug</th>
+          <th>Sett. 3 — 6–10 Lug</th>
+          <th>Tipo</th>
+          <th>Giorno</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- GROUP A -->
+        <tr class="gantt-group-header group-a">
+          <td colspan="6">
+            <div class="gantt-group-inner">
+              PERCORSO A
+              <span class="gantt-group-chip">12 / 14 anni</span>
+              <span class="gantt-group-time">Lun &amp; Mer · 19:00 – 21:00</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="gantt-row">
+          <td class="gantt-cell-meta"><div class="course-name">Commercial + TV Show</div></td>
+          <td class="gantt-cell-bar"><div class="gantt-weeks"><div class="gantt-week-block week-active-lilla">S1</div><div class="gantt-week-block week-active-lilla">S2</div><div class="gantt-week-block week-active-lilla">S3</div></div></td>
+          <td></td><td></td>
+          <td class="gantt-cell-type"><span class="type-badge stile">Stile</span></td>
+          <td class="gantt-cell-day">Lunedì</td>
+        </tr>
+        <tr class="gantt-row">
+          <td class="gantt-cell-meta"><div class="course-name">Fit Class + Contemporaneo</div></td>
+          <td class="gantt-cell-bar"><div class="gantt-weeks"><div class="gantt-week-block week-active-lilla">S1</div><div class="gantt-week-block week-active-lilla">S2</div><div class="gantt-week-block week-active-lilla">S3</div></div></td>
+          <td></td><td></td>
+          <td class="gantt-cell-type"><span class="type-badge tecnica">Tecnica</span></td>
+          <td class="gantt-cell-day">Mercoledì</td>
+        </tr>
+
+        <!-- GROUP B -->
+        <tr class="gantt-group-header group-b">
+          <td colspan="6">
+            <div class="gantt-group-inner">
+              PERCORSO B
+              <span class="gantt-group-chip">15 / 18 anni</span>
+              <span class="gantt-group-time">Lun &amp; Mer · 19:00 – 21:00</span>
+            </div>
+          </td>
+        </tr>
+        <tr class="gantt-row">
+          <td class="gantt-cell-meta"><div class="course-name">Heels</div></td>
+          <td class="gantt-cell-bar"><div class="gantt-weeks"><div class="gantt-week-block week-active-rose">S1</div><div class="gantt-week-block week-active-rose">S2</div><div class="gantt-week-block week-active-rose">S3</div></div></td>
+          <td></td><td></td>
+          <td class="gantt-cell-type"><span class="type-badge stile">Stile</span></td>
+          <td class="gantt-cell-day">Lun + Mer</td>
+        </tr>
+        <tr class="gantt-row">
+          <td class="gantt-cell-meta"><div class="course-name">TV Show</div></td>
+          <td class="gantt-cell-bar"><div class="gantt-weeks"><div class="gantt-week-block week-active-rose">S1</div><div class="gantt-week-block week-active-rose">S2</div><div class="gantt-week-block week-active-rose">S3</div></div></td>
+          <td></td><td></td>
+          <td class="gantt-cell-type"><span class="type-badge stile">Stile</span></td>
+          <td class="gantt-cell-day">Lunedì</td>
+        </tr>
+        <tr class="gantt-row">
+          <td class="gantt-cell-meta"><div class="course-name">Fit Class</div></td>
+          <td class="gantt-cell-bar"><div class="gantt-weeks"><div class="gantt-week-block week-active-rose">S1</div><div class="gantt-week-block week-active-rose">S2</div><div class="gantt-week-block week-active-rose">S3</div></div></td>
+          <td></td><td></td>
+          <td class="gantt-cell-type"><span class="type-badge tecnica">Tecnica</span></td>
+          <td class="gantt-cell-day">Mercoledì</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 5 — CALENDARIO ==================== -->
+<section class="slide slide-calendar" id="slide-calendar">
+  <div class="calendar-header">
+    <div class="section-eyebrow" style="color:rgba(214,64,92,0.9)">Quando</div>
+    <h2>Le tre<br><span style="color:var(--rose)">settimane</span><br>del flow.</h2>
+    <p class="calendar-cta-text">
+      <strong>Il tuo ritmo, la tua scelta.</strong><br>
+      Entra per una settimana, due, o immergiti nel programma completo — ogni modulo è autonomo e completo.
+    </p>
+  </div>
+
+  <div class="weeks-grid">
+    <div class="week-card">
+      <div class="week-number" aria-hidden="true">1</div>
+      <div class="week-label">Settimana 1</div>
+      <div class="week-dates">22 – 26<br><span>Giugno 2026</span></div>
+      <div class="week-days-row">
+        <div class="week-day-dot active">Lu</div><div class="week-day-dot">Ma</div>
+        <div class="week-day-dot active">Me</div><div class="week-day-dot">Gi</div><div class="week-day-dot">Ve</div>
+      </div>
+    </div>
+    <div class="week-card">
+      <div class="week-number" aria-hidden="true">2</div>
+      <div class="week-label">Settimana 2</div>
+      <div class="week-dates">29 – 3<br><span>Giugno · Luglio 2026</span></div>
+      <div class="week-days-row">
+        <div class="week-day-dot active">Lu</div><div class="week-day-dot">Ma</div>
+        <div class="week-day-dot active">Me</div><div class="week-day-dot">Gi</div><div class="week-day-dot">Ve</div>
+      </div>
+    </div>
+    <div class="week-card">
+      <div class="week-number" aria-hidden="true">3</div>
+      <div class="week-label">Settimana 3</div>
+      <div class="week-dates">6 – 10<br><span>Luglio 2026</span></div>
+      <div class="week-days-row">
+        <div class="week-day-dot active">Lu</div><div class="week-day-dot">Ma</div>
+        <div class="week-day-dot active">Me</div><div class="week-day-dot">Gi</div><div class="week-day-dot">Ve</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar-flexibility">
+    <div class="icon">⚡</div>
+    <p>
+      Una settimana per assaporare il flow. Due per viverlo. Tre per farne parte.
+      <span> I posti sono contati: quando si riempiono, si chiudono — e con loro l'unica estate con i nostri docenti ospiti. Agisci ora.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ==================== SLIDE MOOD ==================== -->
+<!-- Background starts at #1a0d30, calendar ends at #1a0d30 — perfect seamless join -->
+<section class="slide slide-mood" id="slide-mood">
+  <div class="mood-overlay"></div>
+  <div class="mood-content">
+    <div class="mood-eyebrow">DSP Summer Flow 2026</div>
+    <!-- No silhouette icon, tighter spacing -->
+    <h2 class="mood-title">
+      Danzare.
+      <span class="line2">Scoprire.</span>
+      <span class="line3">Crescere.</span>
+    </h2>
+    <p class="mood-sub">Estate 2026 &nbsp;·&nbsp; 22 Giugno – 10 Luglio</p>
+  </div>
+</section>
+
+<!-- ==================== SLIDE PRICING ==================== -->
+<section class="slide slide-pricing" id="slide-pricing">
+  <div class="pricing-header">
+    <div>
+      <div class="section-eyebrow" style="color:rgba(214,64,92,0.85)">Le nostre quote</div>
+      <h2 style="color:white;">Investi<br>nel tuo<br><span style="color:var(--rose)">flow.</span></h2>
+    </div>
+    <p class="pricing-sub">Più settimane scegli, più risparmi.<br>Lo sconto cresce con il tuo impegno.</p>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-weeks">1</div>
+      <div class="price-weeks-label">settimana</div>
+      <span class="price-per-week">Tariffa / settimana</span>
+      <div class="price-amount">€60</div>
+      <div class="price-per">per settimana</div>
+      <div class="price-divider"></div>
+      <div class="price-total-label">Totale</div>
+      <div class="price-total">€60,00</div>
+    </div>
+    <div class="price-card">
+      <div class="price-weeks">2</div>
+      <div class="price-weeks-label">settimane</div>
+      <span class="price-per-week">Tariffa / settimana</span>
+      <div class="price-amount">€50</div>
+      <div class="price-per">per settimana</div>
+      <div class="price-divider"></div>
+      <div class="price-total-label">Totale</div>
+      <div class="price-total">€100,00</div>
+      <div class="price-saving">Risparmi €20</div>
+    </div>
+    <div class="price-card featured">
+      <div class="price-weeks">3</div>
+      <div class="price-weeks-label">settimane</div>
+      <span class="price-per-week">Tariffa / settimana</span>
+      <div class="price-amount">€40</div>
+      <div class="price-per">per settimana</div>
+      <div class="price-divider"></div>
+      <div class="price-total-label">Totale</div>
+      <div class="price-total">€120,00</div>
+      <div class="price-saving">Risparmi €60 — massimo valore</div>
+    </div>
+  </div>
+
+  <div class="pricing-note">
+    <div class="pricing-note-icon">💡</div>
+    <p>
+      <strong>Quota d'iscrizione €20 (una tantum)</strong> da versare entro il 30 aprile per riservare il posto. Il pagamento avviene tramite bonifico bancario.
+    </p>
+  </div>
+
+  <div class="pricing-cta-wrap">
+    <a href="https://api.whatsapp.com/send/?phone=3398132329&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" class="btn-pulse">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Prenota ora il tuo posto
+    </a>
+  </div>
+</section>
+
+<!-- ==================== SLIDE COMMUNITY ==================== -->
+<section class="slide slide-community" id="slide-community">
+  <div class="community-grid">
+    <div class="community-left">
+      <div class="section-eyebrow" style="color:rgba(214,64,92,0.8)">Il nostro spazio</div>
+      <h2>Dove le<br>connessioni<br><span class="accent">prendono vita.</span></h2>
+      <p class="community-text">
+        DSP Summer Flow non è solo danza — è uno spazio di relazione.<br><br>
+        Tra una lezione e l'altra, tra una risata e un momento di fatica condivisa, <strong>nascono amicizie che resistono al tempo</strong>. Lontano dal ritmo frenetico della quotidianità, i ragazzi trovano il proprio punto di riferimento: dentro e fuori la sala.
+      </p>
+      <div class="community-values">
+        <div class="community-value"><div class="val-icon">🌱</div> Crescita personale e artistica</div>
+        <div class="community-value"><div class="val-icon">🔗</div> Connessioni autentiche</div>
+        <div class="community-value"><div class="val-icon">🎭</div> Un ambiente sicuro e stimolante</div>
+      </div>
+    </div>
+    <div class="community-right">
+      <div class="comm-photo comm-photo-gradient-a">
+        <div class="comm-photo-inner"><div class="comm-photo-icon">💃</div><div class="comm-photo-label">In sala</div></div>
+      </div>
+      <div class="comm-photo comm-photo-gradient-b">
+        <div class="comm-photo-inner"><div class="comm-photo-icon">✨</div><div class="comm-photo-label">Il gruppo</div></div>
+      </div>
+      <div class="comm-photo comm-photo-gradient-c">
+        <div class="comm-photo-inner"><div class="comm-photo-icon">🎵</div><div class="comm-photo-label">La musica</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE RECAP ==================== -->
+<section class="slide slide-recap" id="slide-recap">
+  <div class="recap-grid">
+    <h2 class="recap-section-title">Tutto quello<br>che ti serve<br><span style="color:var(--rose)">sapere.</span></h2>
+
+    <div class="recap-box">
+      <div class="recap-box-title">📋 Iscrizione</div>
+      <div class="recap-item">
+        <div class="recap-item-icon">⚡</div>
+        <div class="recap-item-text">
+          <strong>Posti Limitati</strong>
+          <span>L'accesso è riservato a un numero definito di partecipanti. Prenota subito il tuo posto.</span>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="recap-item-icon">💳</div>
+        <div class="recap-item-text">
+          <strong>Quota di iscrizione</strong>
+          <span>€20,00 una tantum — da versare entro il <strong>30 aprile</strong> per riservare il tuo posto.<br>
+          <span class="urgency">Numero chiuso: al raggiungimento dei posti le iscrizioni si chiudono.</span></span>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="recap-item-icon">🏦</div>
+        <div class="recap-item-text">
+          <strong>Modalità di pagamento</strong>
+          <span>Tramite bonifico bancario.</span>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="recap-item-icon">📅</div>
+        <div class="recap-item-text"><strong>Sett. 1 – entro 10 Giugno</strong><span>€60,00</span></div>
+      </div>
+      <div class="recap-item">
+        <div class="recap-item-icon">📅</div>
+        <div class="recap-item-text"><strong>Sett. 2 – entro 15 Giugno</strong><span>€100,00 (cumulativo)</span></div>
+      </div>
+      <div class="recap-item">
+        <div class="recap-item-icon">📅</div>
+        <div class="recap-item-text"><strong>Sett. 3 – entro 20 Giugno</strong><span>€120,00 (cumulativo)</span></div>
+      </div>
+    </div>
+
+    <div class="recap-box">
+      <div class="recap-box-title">🎁 Cosa include</div>
+      <ul class="included-list">
+        <li><div class="check-icon">✓</div> 4 lezioni a settimana</li>
+        <li><div class="check-icon">✓</div> 2 incontri settimanali (2h ciascuno)</li>
+        <li><div class="check-icon">✓</div> Docenti ospiti dall'esterno — opportunità unica</li>
+        <li><div class="check-icon">✓</div> Kit DSP Summer Flow (borraccia + t-shirt)</li>
+        <li><div class="check-icon">✓</div> Acqua a volontà</li>
+        <li><div class="check-icon">✓</div> Ambiente sicuro e stimolante</li>
+        <li><div class="check-icon">✓</div> Gruppo ristretto — posti limitati garantiti</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE CTA ==================== -->
+<section class="slide slide-cta" id="slide-cta">
+  <div class="cta-eyebrow">Posti Limitati · N° Chiuso · Estate 2026</div>
+  <h2 class="cta-title">Prenota<br><span class="accent">il tuo flow.</span></h2>
+  <div class="cta-urgency">Al raggiungimento dei posti chiudiamo — iscriviti entro il 30 aprile</div>
+  <div class="cta-buttons">
+    <a href="https://api.whatsapp.com/send/?phone=3398132329&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" class="btn-pulse">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Scrivici su WhatsApp
+    </a>
+    <a href="/cdn-cgi/l/email-protection#1f7b7e71657e6d6b7a6c6b6a7b76706f6d705f78727e7673317c7072" class="btn-secondary">
+      ✉️ &nbsp;Scrivici via Email
+    </a>
+  </div>
+  <p style="margin-top:60px;font-size:12px;color:rgba(255,255,255,0.18);letter-spacing:0.15em;text-transform:uppercase;">
+    DSP Summer Flow · Studio Pro Lainate · Estate 2026 · Danzare. Scoprire. Crescere.
+  </p>
+</section>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const dots = document.querySelectorAll('.nav-dot');
+  const sections = Array.from(dots).map(d => document.getElementById(d.dataset.target));
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => sections[i].scrollIntoView({ behavior:'smooth' }));
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = sections.indexOf(entry.target);
+        dots.forEach(d => d.classList.remove('active'));
+       
